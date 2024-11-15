@@ -1,1 +1,1 @@
-// actual parse code here
+// lmc model here: collection of structs that simulate the computer
