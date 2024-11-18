@@ -1,6 +1,6 @@
 // lmc model here: collection of structs that simulate the computer
 
-use std::collections::VecDeque;
+use std::{collections::VecDeque, fmt::Error};
 
 pub struct LMC {
     mailbox: Mailbox,
@@ -8,10 +8,17 @@ pub struct LMC {
     counter: Counter,
     input: ITray,
     output: OTray,
+    flag: Flag,
 }
 impl LMC {
     pub fn new() -> Self {
-        todo!()
+        Self { mailbox: Mailbox::new(),  
+            calculator: Calculator::new(), 
+            counter: Counter::new(),
+            input: ITray::new(),
+            output: OTray::new(),
+            flag: Flag::new(),
+        }
     }
 }
 
@@ -20,7 +27,22 @@ struct Mailbox {
 }
 impl Mailbox {
     fn new() -> Self {
-        todo!()
+      Self { boxes: vec![0; 100] }  
+    }
+    fn put(&mut self, data: i32, id: i32) -> Result<(), Error> {
+        if id > 99 || id < 0 {
+            return Err(Error);
+        }
+        
+        self.boxes[id as usize] = data;
+        Ok(())
+    }
+    fn open(&self, id: i32) -> Result<i32, Error> {
+        if id > 99 || id < 0 {
+            return Err(Error);
+        }
+
+        Ok(self.boxes[id as usize])
     }
 }
 
@@ -29,6 +51,15 @@ struct Calculator {
 }
 impl Calculator {
     fn new() -> Self {
+        Self { display: 0 }
+    }
+    fn read() -> Result<i32, Error> {
+        todo!()
+    }
+    fn add(num: i32) -> Result<i32, Error> {
+        todo!()
+    }
+    fn sub(num: i32) -> Result<i32, Error> {
         todo!()
     }
 }
@@ -38,7 +69,7 @@ struct Counter {
 }
 impl Counter {
     fn new() -> Self {
-        todo!()
+        Self { count: 0 }
     }
 }
 
@@ -47,7 +78,7 @@ struct ITray {
 }
 impl ITray {
     fn new() -> Self {
-        todo!()
+        Self { tray: VecDeque::new() }
     }
 }
 struct OTray {
@@ -55,6 +86,15 @@ struct OTray {
 }
 impl OTray {
     fn new() -> Self {
-        todo!()
+        Self { tray: VecDeque::new() }
+    }
+}
+
+struct Flag {
+    NEG: bool,
+}
+impl Flag {
+    fn new() -> Self {
+        Self { NEG: false, }
     }
 }
